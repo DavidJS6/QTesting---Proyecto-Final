@@ -1,5 +1,4 @@
 $(function () {
-    alert("Hola");
 
     $("#button").click(function (){
         $.ajax({
@@ -18,5 +17,23 @@ $(function () {
             }
         });
     });
+
+
+    function registrarUsuario(){
+
+    }
+
+    function registrarIngreso(){
+
+    }
+
+    function registrarSalida(){
+
+    }
+
+    function updateView(){
+
+    }
+
 });
 

@@ -11,7 +11,7 @@ Given('Dados datos de usuario nombre: {string} y ci: {int}', function (string, i
   userCi = int;
 });
 
-When('Navego a la pagina principal', async function () {
+When('Navego a la pagina principal', { timeout: 10 * 1000 } , async function () {
   chromeDriver = await new Builder().forBrowser('chrome').build();
   await chromeDriver.get('http://localhost:8080/ui');
 });
