@@ -1,25 +1,25 @@
-package com.example.qtestingserver.classes;
+package com.example.qtestingserver.dto.responses;
 
 import com.example.qtestingserver.database.Client;
 
 public class Response {
 
-    private boolean transaction;
+    private boolean transactionCompleted;
     private String message;
     private Client client;
 
-    public Response(boolean transaction, String message, Client client){
-        this.transaction = transaction;
+    public Response(boolean transactionCompleted, String message, Client client){
+        this.transactionCompleted = transactionCompleted;
         this.message = message;
         this.client = client;
     }
 
-    public boolean isTransaction() {
-        return transaction;
+    public boolean isTransactionCompleted() {
+        return transactionCompleted;
     }
 
-    public void setTransaction(boolean transaction) {
-        this.transaction = transaction;
+    public void setTransactionCompleted(boolean transactionCompleted) {
+        this.transactionCompleted = transactionCompleted;
     }
 
     public String getMessage() {
