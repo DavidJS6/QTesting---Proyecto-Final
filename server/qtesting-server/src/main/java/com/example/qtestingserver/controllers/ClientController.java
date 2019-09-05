@@ -4,6 +4,7 @@ import com.example.qtestingserver.classes.ClientManager;
 import com.example.qtestingserver.dto.responses.Response;
 import com.example.qtestingserver.constants.Messages;
 import com.example.qtestingserver.database.Client;
+import com.example.qtestingserver.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,8 @@ public class ClientController {
         try {
             Client client = clientManager.registerClient(name);
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_REGISTERED, client), HttpStatus.OK);
-        } catch (Exception ex){
+        } catch (InvalidNameException | ClientAlreadyRegisteredException ex) {
+            ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -45,7 +47,8 @@ public class ClientController {
         try {
             Client client = clientManager.registerIncome(name, amount);
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_TRANSACTION, client), HttpStatus.OK);
-        } catch (Exception ex){
+        } catch (ClientNotRegisteredException | ZeroAmountException ex) {
+            ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,7 +63,8 @@ public class ClientController {
         try {
             Client client = clientManager.registerWithdrawal(name, amount);
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_TRANSACTION, client), HttpStatus.OK);
-        } catch (Exception ex){
+        } catch (ClientNotRegisteredException | ZeroAmountException | BalanceNotSufficientException ex) {
+            ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

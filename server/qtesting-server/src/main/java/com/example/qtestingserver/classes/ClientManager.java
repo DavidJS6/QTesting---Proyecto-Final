@@ -1,6 +1,7 @@
 package com.example.qtestingserver.classes;
 
 import com.example.qtestingserver.database.Client;
+import com.example.qtestingserver.exceptions.*;
 
 public class ClientManager {
 
@@ -20,17 +21,14 @@ public class ClientManager {
     }
 
     // Se debera evitar la insercion de caracteres especiales
-    public Client registerClient(String name) throws Exception {
-        if (name.matches(REGULAR_EXPRESION_NAME)) {
-            return clientService.registerClient(name);
-        } else {
-            throw new Exception("invalid name, you cannot use special characters!");
-        }
-
+    public Client registerClient(String name) throws InvalidNameException, ClientAlreadyRegisteredException {
+        checkClientName(name);
+        checkIfClientIsRegistered(name);
+        return clientService.registerClient(name);
     }
 
     // Se debera validar que el usuario exista en la lista
-    public Client registerIncome(String name, Double amount) throws Exception {
+    public Client registerIncome(String name, Double amount) throws ZeroAmountException, ClientNotRegisteredException {
         checkZeroAmount(amount);
         checkIfClientExist(name);
         return clientService.registerIncome(name, amount);
@@ -38,28 +36,40 @@ public class ClientManager {
 
     // Se debera validar que el usuario exista en la lista
     // Se debera validar que el usuario tenga sueldo suficiente para el retiro
-    public Client registerWithdrawal(String name, Double amount) throws Exception {
+    public Client registerWithdrawal(String name, Double amount) throws ZeroAmountException, ClientNotRegisteredException, BalanceNotSufficientException {
         checkZeroAmount(amount);
         checkIfClientExist(name);
         checkBalance(name, amount);
         return clientService.registerWithdrawal(name, amount);
     }
 
-    private void checkIfClientExist(String name) throws Exception {
+    public void checkIfClientIsRegistered(String name) throws ClientAlreadyRegisteredException {
+        if(clientService.getClient(name) != null){
+            throw new ClientAlreadyRegisteredException("Client is already registered");
+        }
+    }
+
+    private void checkClientName(String name) throws InvalidNameException {
+        if (!name.matches(REGULAR_EXPRESION_NAME)) {
+            throw new InvalidNameException("invalid name, you cannot use special characters!");
+        }
+    }
+
+    private void checkIfClientExist(String name) throws ClientNotRegisteredException {
         if (clientService.getClient(name) == null) {
-            throw new Exception("Client not registered");
+            throw new ClientNotRegisteredException("Client not registered");
         }
     }
 
-    private void checkZeroAmount(Double amount) throws Exception {
+    private void checkZeroAmount(Double amount) throws ZeroAmountException {
         if (amount == 0) {
-            throw new Exception("The amount needs to be higher than zero");
+            throw new ZeroAmountException("The amount needs to be higher than zero");
         }
     }
 
-    private void checkBalance(String name, Double amount) throws Exception {
+    private void checkBalance(String name, Double amount) throws BalanceNotSufficientException {
         if (clientService.getClient(name).getBalance() < amount) {
-            throw new Exception("Insufficient balance to complete the transaction");
+            throw new BalanceNotSufficientException("Insufficient balance to complete the transaction");
         }
     }
 
