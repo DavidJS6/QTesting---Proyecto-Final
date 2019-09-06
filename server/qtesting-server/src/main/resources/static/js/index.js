@@ -2,17 +2,17 @@ $(function () {
 
     // https://codeseven.github.io/toastr/
 
-    $("#register-boton").click(function () {
+    $("#register-button").click(function () {
         var name = document.getElementById("name-txt").value;
         console.log(name);
         if(name !== ""){
-            registerUser(name);
+            registerClient(name);
         }else{
             alert("Dege ingresar un nombre");
         }
     });
 
-    $("#login-boton").click(function () {
+    $("#login-button").click(function () {
         var name = document.getElementById("name-txt").value;
         if(name !== ""){
             login(name);
@@ -41,7 +41,7 @@ $(function () {
 
     /*-------------------------------------------------------------------------*/
 
-    function registerUser(name){
+    function registerClient(name){
         $.ajax({
             url: 'http://localhost:4860/register-client',
             type: 'POST',
@@ -51,15 +51,14 @@ $(function () {
                 name: name
             }),
             success: function(response){
-                console.log("Se consumio el servicio con exito");
                 console.log(response);
                 localStorage.setItem("name", name);
                 $("#registration-block").css("display", "none");
                 $("#transaction-block").css("display", "block");
             },
             error: function(response){
-                console.log("Hubo un error al consumir el servicio");
                 console.log(response);
+                toastr.error(response.responseJSON.message);
             }
         });
     }
@@ -74,15 +73,15 @@ $(function () {
                 name: name
             }),
             success: function(response){
-                console.log("Se consumio el servicio con exito");
                 console.log(response);
                 localStorage.setItem("name", name);
                 $("#registration-block").css("display", "none");
                 $("#transaction-block").css("display", "block");
+                updateView(response.client);
             },
             error: function(response){
-                console.log("Hubo un error al consumir el servicio");
                 console.log(response);
+                toastr.error(response.responseJSON.message);
             }
         });
     }
@@ -98,14 +97,12 @@ $(function () {
                 transactionAmount: amount
             }),
             success: function(response){
-                console.log("Se consumio el servicio con exito");
                 console.log(response);
-                $("#balance-detail").css("display", "block");
                 updateView(response.client);
             },
             error: function(response){
-                console.log("Hubo un error al consumir el servicio");
                 console.log(response);
+                toastr.error(response.responseJSON.message);
             }
         });
     }
@@ -121,19 +118,22 @@ $(function () {
                 transactionAmount: amount
             }),
             success: function(response){
-                console.log("Se consumio el servicio con exito");
                 console.log(response);
-                $("#balance-detail").css("display", "block");
                 updateView(response.client);
             },
             error: function(response){
-                console.log("Hubo un error al consumir el servicio");
                 console.log(response);
+                toastr.error(response.responseJSON.message);
             }
         });
     }
 
     function updateView(client){
+        if(client.balance === 0){
+            return;
+        }
+
+        $("#balance-detail").css("display", "block");
         $("#balance-amount").text(client.balance);
         $(".item").remove();
         client.balanceDetail.forEach(showTransaction);
@@ -143,11 +143,13 @@ $(function () {
         var current_datetime = new Date(item.transactionDate);
         var formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
 
-        var newItem =   "<tr class='item'>" +
+        var sign = item.transactionType === "Retiro" ? '-':'';
+        var className = item.transactionType === "Retiro" ? "withdrawal-transaction":'income-transaction';
+        var newItem =   "<tr class='item " + className + "' >" +
                             "<td>" + item.transactionType + "</td>" +
                             "<td>" + formatted_date + "</td>" +
                             //"<td>" + item.transactionDate + "</td>" +
-                            "<td>" + item.amount + "</td>" +
+                            "<td>" + sign + item.amount + "</td>" +
                         "</tr>";
         $("#balance-table").append(newItem);
     }

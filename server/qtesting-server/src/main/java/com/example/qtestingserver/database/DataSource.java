@@ -30,6 +30,15 @@ public class DataSource {
         return client;
     }
 
+    public Client getClient(String name) {
+        for (Client client : listaClientes) {
+            if (client.getName().equals(name)) {
+                return client;
+            }
+        }
+        return null;
+    }
+
     public Client registerIncome(String name, Double income) {
         Client client = getClient(name);
         client.setBalance(client.getBalance() + income);
@@ -48,13 +57,9 @@ public class DataSource {
         return client;
     }
 
-    public Client getClient(String name) {
-        for (Client client : listaClientes) {
-            if (client.getName().equals(name)) {
-                return client;
-            }
-        }
-        return null;
+    public Double getTotalBalance(String name){
+        Client client = getClient(name);
+        return client.getBalance();
     }
 
 }

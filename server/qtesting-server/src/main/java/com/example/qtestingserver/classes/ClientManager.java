@@ -48,9 +48,14 @@ public class ClientManager {
         return clientService.registerWithdrawal(name, amount);
     }
 
+    public Double getTotalBalance(String name) throws ClientNotRegisteredException {
+        checkIfClientExist(name);
+        return clientService.getTotalBlance(name);
+    }
+
     private void checkClientName(String name) throws InvalidNameException {
         if (!name.matches(REGULAR_EXPRESION_NAME)) {
-            throw new InvalidNameException("invalid name, you cannot use special characters!");
+            throw new InvalidNameException("Invalid name, you cannot use special characters!");
         }
     }
 

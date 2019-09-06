@@ -34,9 +34,11 @@ public class ClientController {
         try {
             Client client = clientManager.registerClient(request.getName());
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_REGISTERED, client), HttpStatus.OK);
-        } catch (InvalidNameException | ClientAlreadyRegisteredException ex) {
+        } catch (Exception ex){
             ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (InvalidNameException | ClientAlreadyRegisteredException ex) {
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -50,9 +52,29 @@ public class ClientController {
         try {
             Client client = clientManager.getClient(request.getName());
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_VERIFIED, client), HttpStatus.OK);
-        } catch (ClientNotRegisteredException ex) {
+        } catch (Exception ex){
             ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ClientNotRegisteredException ex) {
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(
+            value = "/get-client",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Object> getBalance(@RequestBody ClientRegistrationRequest request){
+        try {
+            Client client = clientManager.getClient(request.getName());
+            return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_TRANSACTION, client), HttpStatus.OK);
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ClientNotRegisteredException ex) {
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -66,9 +88,11 @@ public class ClientController {
         try {
             Client client = clientManager.registerIncome(request.getClientName(), request.getTransactionAmount());
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_TRANSACTION, client), HttpStatus.OK);
-        } catch (ClientNotRegisteredException | ZeroAmountException ex) {
+        } catch (Exception ex){
             ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ClientNotRegisteredException | ZeroAmountException ex) {
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -82,9 +106,11 @@ public class ClientController {
         try {
             Client client = clientManager.registerWithdrawal(request.getClientName(), request.getTransactionAmount());
             return new ResponseEntity<>(new Response(true, Messages.SUCCESSFULLY_TRANSACTION, client), HttpStatus.OK);
-        } catch (ClientNotRegisteredException | ZeroAmountException | BalanceNotSufficientException ex) {
+        } catch (Exception ex){
             ex.printStackTrace();
             return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ClientNotRegisteredException | ZeroAmountException | BalanceNotSufficientException ex) {
+            return new ResponseEntity<>(new Response(false, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
     }
 

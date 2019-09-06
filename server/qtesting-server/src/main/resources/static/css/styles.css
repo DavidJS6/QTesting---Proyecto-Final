@@ -72,3 +72,13 @@ tr:nth-child(even) {
 #main-container #transaction-block #balance-detail {
     display: none;
 }
+
+#main-container #transaction-block #balance-detail .income-transaction {
+    background-color: green;
+    color: white;
+}
+
+#main-container #transaction-block #balance-detail .withdrawal-transaction {
+    background-color: red;
+    color: white;
+}

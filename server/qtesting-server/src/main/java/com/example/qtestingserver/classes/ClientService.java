@@ -17,6 +17,10 @@ public class ClientService {
         return dataSource.registerClient(name);
     }
 
+    public Client getClient(String name){
+        return dataSource.getClient(name);
+    }
+
     public Client registerIncome(String name, Double amount){
         return dataSource.registerIncome(name, amount);
     }
@@ -25,8 +29,8 @@ public class ClientService {
         return dataSource.registerWithdrawal(name, amount);
     }
 
-    public Client getClient(String name){
-        return dataSource.getClient(name);
+    public Double getTotalBlance(String name){
+        return dataSource.getTotalBalance(name);
     }
 
 }
