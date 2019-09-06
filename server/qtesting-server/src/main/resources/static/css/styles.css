@@ -1,8 +1,24 @@
-body{
+body {
     margin: 20px;
 }
 
-#block{
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+#block {
     display: block;
     position: absolute;
     top: 0;
@@ -11,7 +27,7 @@ body{
     right: 0;
 }
 
-#main-container{
+#main-container {
     display: block;
     position: relative;
     width: 80%;
@@ -19,4 +35,40 @@ body{
     margin: 0 auto;
     /*border: 1px solid black;*/
     box-sizing: border-box;
+}
+
+/*----------------------------------------------------*/
+
+#main-container .form-block {
+    text-align: center;
+    padding: 10px;
+}
+
+#main-container .form-block .input-block {
+    padding: 10px;
+}
+
+#main-container .form-block .input-block input {
+    width: 250px;
+}
+
+#main-container .form-block .button-block button {
+    padding: 5px 20px;
+    margin: 2px 10px;
+}
+
+#main-container .form-block #balance-label {
+    display: block;
+    font-size: 30px;
+    padding: 15px;
+}
+
+/*----------------------------------------------------*/
+
+#main-container #transaction-block {
+    display: none;
+}
+
+#main-container #transaction-block #balance-detail {
+    display: none;
 }

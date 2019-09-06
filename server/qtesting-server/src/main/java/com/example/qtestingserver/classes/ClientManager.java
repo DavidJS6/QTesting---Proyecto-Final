@@ -27,6 +27,11 @@ public class ClientManager {
         return clientService.registerClient(name);
     }
 
+    public Client getClient(String name) throws ClientNotRegisteredException {
+        checkIfClientExist(name);
+        return clientService.getClient(name);
+    }
+
     // Se debera validar que el usuario exista en la lista
     public Client registerIncome(String name, Double amount) throws ZeroAmountException, ClientNotRegisteredException {
         checkZeroAmount(amount);
@@ -43,15 +48,15 @@ public class ClientManager {
         return clientService.registerWithdrawal(name, amount);
     }
 
-    public void checkIfClientIsRegistered(String name) throws ClientAlreadyRegisteredException {
-        if(clientService.getClient(name) != null){
-            throw new ClientAlreadyRegisteredException("Client is already registered");
-        }
-    }
-
     private void checkClientName(String name) throws InvalidNameException {
         if (!name.matches(REGULAR_EXPRESION_NAME)) {
             throw new InvalidNameException("invalid name, you cannot use special characters!");
+        }
+    }
+
+    private void checkIfClientIsRegistered(String name) throws ClientAlreadyRegisteredException {
+        if(clientService.getClient(name) != null){
+            throw new ClientAlreadyRegisteredException("Client is already registered");
         }
     }
 
