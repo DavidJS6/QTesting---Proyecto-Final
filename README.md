@@ -55,7 +55,7 @@ el archivo jar ejecutable del servidor
             > java -jar qtesting-server-1.0.0-SNAPSHOT.jar
 
 De cualquiera de las dos formas mencionadas anteriormente se terminará teniendo un servidor
-al cual se podrá acceder por medio del siguiente enlace [http://localhost:4868/home](http://localhost:4868/home)
+al cual se podrá acceder por medio del siguiente enlace [http://localhost:42624/home](http://localhost:42624/home)
 
 
 ### Pasos para ejecutar las pruebas unitarias

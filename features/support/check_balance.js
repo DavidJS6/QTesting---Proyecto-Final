@@ -13,7 +13,7 @@ Given('El siguiente dato NOMBRE {string}', function (name) {
 When('Preparo el JSON con los datos del usuario', function () {
     this.httpOptions = {
         method: 'POST',
-        uri: 'http://localhost:4868/get-user',
+        uri: 'http://localhost:42624/get-user',
         json: true,
         body: this.userData,
         resolveWithFullResponse: true

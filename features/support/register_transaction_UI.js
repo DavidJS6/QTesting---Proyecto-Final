@@ -9,7 +9,7 @@ Given('Los siguientes datos de usuario NOMBRE {string} y MONTO {int}', function 
 
 When('Navego a la pagina principal del sistema', { timeout: 10 * 1000 } , async function () {
     chromeDriver = await new Builder().forBrowser('chrome').build();
-    await chromeDriver.get('http://localhost:4868/home');
+    await chromeDriver.get('http://localhost:42624/home');
 });
 
 When('Introduzco el nombre del usuario', async function () {

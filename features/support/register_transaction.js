@@ -18,7 +18,7 @@ Given('Los siguientes datos NOMBRE {string} y MONTO {int}', function (name, amou
 When('Preparo el JSON para registrar un nuevo usuario', function () {
     this.httpTransactionOptions = {
         method: 'POST',
-        uri: 'http://localhost:4868/register-user',
+        uri: 'http://localhost:42624/register-user',
         json: true,
         body: this.newUser,
         resolveWithFullResponse: true
@@ -38,7 +38,7 @@ When('Hago una request POST para registrar al usuario', async function () {
 When('Preparo el JSON para registrar la transaccion', function () {
     this.httpTransactionOptions = {
         method: 'POST',
-        uri: 'http://localhost:4868/register-income',
+        uri: 'http://localhost:42624/register-income',
         json: true,
         body: this.transactionData,
         resolveWithFullResponse: true
