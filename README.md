@@ -105,5 +105,5 @@ el proyecto y ejecutar el siguiente comando
     diferencia de que esta prueba interactua con la vista HTML para hacer las validaciones.
 
         
-**Nota:** Para que estas pruebas se puedan realizar de forma exitosa es necesario que el servidor
-Java se encuentre previamente levantado antes de ejecutar el comando de cucumberJS
+**Nota:** Para que estas pruebas se puedan realizar de forma exitosa es necesario que el servidor Java se encuentre previamente levantado antes de ejecutar el comando de cucumberJS.
+De ser necesario se puede cambiar el puerto sobre el que se levanta el servidor Java modificando el archivo "application.properties" que se encuentra en el directorio qtesting-server/src/main/resources/ dentro de la carpeta donde se clono el proyecto, sin embargo si se modifica el puerto en el servidor Java tambien se debera modificar el puerto de la ruta de los servicios que se consumen desde el Codigo NodeJS para que las pruebas se ejecuten correctamente.
