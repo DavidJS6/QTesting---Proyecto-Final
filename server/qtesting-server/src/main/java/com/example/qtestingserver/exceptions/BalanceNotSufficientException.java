@@ -2,8 +2,9 @@ package com.example.qtestingserver.exceptions;
 
 public class BalanceNotSufficientException extends Throwable {
 
-    public BalanceNotSufficientException(String errorMessage){
-        super(errorMessage);
+    public BalanceNotSufficientException(){
+        //super("Insufficient balance to complete the transaction")
+        super("Saldo insuficiente para completar la transacción");
     }
 
 }

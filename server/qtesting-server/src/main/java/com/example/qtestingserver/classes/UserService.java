@@ -5,8 +5,6 @@ import com.example.qtestingserver.database.DataSource;
 
 public class UserService {
 
-    // Aqui se maneja el acceso a la clase User (Base de datos)
-
     private DataSource dataSource;
 
     public UserService(){

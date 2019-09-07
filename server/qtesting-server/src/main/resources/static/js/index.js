@@ -8,7 +8,7 @@ $(function () {
         if(name !== ""){
             registerUser(name);
         }else{
-            toastr.warning("Dege ingresar un nombre");
+            toastr.warning("Debe ingresar un nombre");
         }
     });
 
@@ -17,7 +17,7 @@ $(function () {
         if(name !== ""){
             login(name);
         }else{
-            toastr.warning("Dege ingresar un nombre");
+            toastr.warning("Debe ingresar un nombre");
         }
     });
 

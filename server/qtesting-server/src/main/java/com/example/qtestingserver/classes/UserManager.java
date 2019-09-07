@@ -5,16 +5,9 @@ import com.example.qtestingserver.exceptions.*;
 
 public class UserManager {
 
-    // Este sera el medio por el cual el controlador podra hacer cambios en la base de datos
-    // Desde aqui se hara uso de la clase ClienteService para poder modificar los datos de
-    // los clientes
-    // De igual manera aqui se haran las validaciones respectivas de los servicios
-
     private UserService userService;
 
-    // https://www.vogella.com/tutorials/JavaRegularExpressions/article.html
-    private String REGULAR_EXPRESION_NAME = "^[a-zñA-ZÑ]+(([',. -][a-zñA-ZÑ ])?[a-zñA-ZÑ]*)*$";
-    //private String REGULAR_EXPRESION_NAME = "^[A-Za-z]+([\ A-Za-z]+)*";
+    private static final String REGULAR_EXPRESION_NAME = "^[a-zñA-ZÑ]+(([',. -][a-zñA-ZÑ ])?[a-zñA-ZÑ]*)*$";
 
     public UserManager() {
         userService = new UserService();
@@ -50,31 +43,31 @@ public class UserManager {
 
     private void checkClientName(String name) throws InvalidNameException {
         if (!name.matches(REGULAR_EXPRESION_NAME)) {
-            throw new InvalidNameException("Invalid name, you cannot use special characters!");
+            throw new InvalidNameException();
         }
     }
 
     private void checkIfClientIsRegistered(String name) throws UserAlreadyRegisteredException {
         if(userService.getClient(name) != null){
-            throw new UserAlreadyRegisteredException("User is already registered");
+            throw new UserAlreadyRegisteredException();
         }
     }
 
     private void checkIfClientExist(String name) throws UserNotRegisteredException {
         if (userService.getClient(name) == null) {
-            throw new UserNotRegisteredException("User not registered");
+            throw new UserNotRegisteredException();
         }
     }
 
     private void checkZeroAmount(Double amount) throws ZeroAmountException {
-        if (amount == 0) {
-            throw new ZeroAmountException("The amount needs to be higher than zero");
+        if (amount <= 0) {
+            throw new ZeroAmountException();
         }
     }
 
     private void checkBalance(String name, Double amount) throws BalanceNotSufficientException {
         if (userService.getClient(name).getBalance() < amount) {
-            throw new BalanceNotSufficientException("Insufficient balance to complete the transaction");
+            throw new BalanceNotSufficientException();
         }
     }
 
