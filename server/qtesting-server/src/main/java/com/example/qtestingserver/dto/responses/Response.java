@@ -1,17 +1,17 @@
 package com.example.qtestingserver.dto.responses;
 
-import com.example.qtestingserver.database.Client;
+import com.example.qtestingserver.database.User;
 
 public class Response {
 
     private boolean transactionCompleted;
     private String message;
-    private Client client;
+    private User user;
 
-    public Response(boolean transactionCompleted, String message, Client client){
+    public Response(boolean transactionCompleted, String message, User user){
         this.transactionCompleted = transactionCompleted;
         this.message = message;
-        this.client = client;
+        this.user = user;
     }
 
     public boolean isTransactionCompleted() {
@@ -30,11 +30,11 @@ public class Response {
         this.message = message;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

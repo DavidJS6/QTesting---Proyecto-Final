@@ -2,16 +2,19 @@ const { setWorldConstructor } = require("cucumber");
 
 class CustomWorld {
   constructor() {
-    this.result = 0;
+    this.userData = {};
+    this.expectedAmount;
+    this.httpOptions = {};
+    this.serverResponse = undefined;
+
+    this.newUser = {};
+    this.transactionData = {};
+    this.httpTransactionOptions = {};
+
+    this.userName;
+    this.transactionAmount;
   }
 
-  setTo(number) {
-    this.result = number;
-  }
-
-  incrementBy(number) {
-    this.result += number;
-  }
 }
 
 setWorldConstructor(CustomWorld);

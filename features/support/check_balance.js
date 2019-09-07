@@ -2,28 +2,26 @@ const { Given, When, Then } = require('cucumber')
 const { expect } = require('chai')
 const httpClient = require('request-promise')
 
-let clientData = {};
-let httpOptions = {};
 let serverResponse = undefined;
 
 Given('El siguiente dato NOMBRE {string}', function (name) {
-    clientData = {
+    this.userData = {
         name: name
     }
 });
 
-When('Preparo el JSON con los datos del cliente', function () {
-    httpOptions = {
+When('Preparo el JSON con los datos del usuario', function () {
+    this.httpOptions = {
         method: 'POST',
-        uri: 'http://localhost:4860/get-client',
+        uri: 'http://localhost:4868/get-user',
         json: true,
-        body: clientData,
+        body: this.userData,
         resolveWithFullResponse: true
     };
 });
 
-Then('Hago una request POST para obtener el balance del cliente', async function () {
-    await httpClient(httpOptions)
+Then('Hago una request POST para obtener el balance del usuario', async function () {
+    await httpClient(this.httpOptions)
     .then(function(response) {
         serverResponse = response;
     })

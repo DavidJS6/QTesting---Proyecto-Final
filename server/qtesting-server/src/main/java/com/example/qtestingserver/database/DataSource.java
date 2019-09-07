@@ -1,7 +1,6 @@
 package com.example.qtestingserver.database;
 
 import com.example.qtestingserver.constants.TransactionType;
-import sun.util.cldr.CLDRLocaleDataMetaInfo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,10 +10,10 @@ public class DataSource {
 
     private static DataSource instance;
 
-    private List<Client> listaClientes;
+    private List<User> listaUsuarios;
 
     private DataSource() {
-        this.listaClientes = new ArrayList<>();
+        this.listaUsuarios = new ArrayList<>();
     }
 
     public static DataSource getInstance() {
@@ -24,42 +23,43 @@ public class DataSource {
         return instance;
     }
 
-    public Client registerClient(String name) {
-        Client client = new Client(name);
-        listaClientes.add(client);
-        return client;
+    public User registerUser(String name) {
+        User user = getUser(name);
+        if(user == null){
+            user = new User(name);
+            listaUsuarios.add(user);
+        }else{
+            user.setBalance(0D);
+            user.setBalanceDetail(new ArrayList<>());
+        }
+        return user;
     }
 
-    public Client getClient(String name) {
-        for (Client client : listaClientes) {
-            if (client.getName().equals(name)) {
-                return client;
+    public User getUser(String name) {
+        for (User user : listaUsuarios) {
+            if (user.getName().equals(name)) {
+                return user;
             }
         }
         return null;
     }
 
-    public Client registerIncome(String name, Double income) {
-        Client client = getClient(name);
-        client.setBalance(client.getBalance() + income);
+    public User registerIncome(String name, Double income) {
+        User user = getUser(name);
+        user.setBalance(user.getBalance() + income);
 
         Transaction transaction = new Transaction(TransactionType.INCOME_TRANSACTION, new Date(), income);
-        client.getBalanceDetail().add(transaction);
-        return client;
+        user.getBalanceDetail().add(transaction);
+        return user;
     }
 
-    public Client registerWithdrawal(String name, Double withdrawal) {
-        Client client = getClient(name);
-        client.setBalance(client.getBalance() - withdrawal);
+    public User registerWithdrawal(String name, Double withdrawal) {
+        User user = getUser(name);
+        user.setBalance(user.getBalance() - withdrawal);
 
         Transaction transaction = new Transaction(TransactionType.WITHDRAWAL_TRANSACTION, new Date(), withdrawal);
-        client.getBalanceDetail().add(transaction);
-        return client;
-    }
-
-    public Double getTotalBalance(String name){
-        Client client = getClient(name);
-        return client.getBalance();
+        user.getBalanceDetail().add(transaction);
+        return user;
     }
 
 }

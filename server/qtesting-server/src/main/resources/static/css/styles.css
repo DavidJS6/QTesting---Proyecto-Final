@@ -63,6 +63,12 @@ tr:nth-child(even) {
     padding: 15px;
 }
 
+#main-container .form-block #user-name-label {
+    display: block;
+    font-size: 25px;
+    padding: 15px;
+}
+
 /*----------------------------------------------------*/
 
 #main-container #transaction-block {
@@ -76,9 +82,13 @@ tr:nth-child(even) {
 #main-container #transaction-block #balance-detail .income-transaction {
     background-color: green;
     color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px black;
 }
 
 #main-container #transaction-block #balance-detail .withdrawal-transaction {
     background-color: red;
     color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px black;
 }

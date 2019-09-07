@@ -6,9 +6,9 @@ $(function () {
         var name = document.getElementById("name-txt").value;
         console.log(name);
         if(name !== ""){
-            registerClient(name);
+            registerUser(name);
         }else{
-            alert("Dege ingresar un nombre");
+            toastr.warning("Dege ingresar un nombre");
         }
     });
 
@@ -17,7 +17,7 @@ $(function () {
         if(name !== ""){
             login(name);
         }else{
-            alert("Dege ingresar un nombre");
+            toastr.warning("Dege ingresar un nombre");
         }
     });
 
@@ -26,7 +26,7 @@ $(function () {
         if(amount !== ""){
             registerIncome(localStorage.getItem("name"), amount);
         }else{
-            alert("Dege ingresar un monto");
+            toastr.warning("Dege ingresar un monto");
         }
     });
 
@@ -35,15 +35,15 @@ $(function () {
         if(amount !== ""){
             registerWithdrawal(localStorage.getItem("name"), amount);
         }else{
-            alert("Dege ingresar un monto");
+            toastr.warning("Dege ingresar un monto");
         }
     });
 
     /*-------------------------------------------------------------------------*/
 
-    function registerClient(name){
+    function registerUser(name){
         $.ajax({
-            url: 'http://localhost:4860/register-client',
+            url: '/register-user',
             type: 'POST',
             contentType : 'application/json; charset=utf-8',
             dataType: 'json',
@@ -53,6 +53,7 @@ $(function () {
             success: function(response){
                 console.log(response);
                 localStorage.setItem("name", name);
+                $("#user-name").text(response.user.name);
                 $("#registration-block").css("display", "none");
                 $("#transaction-block").css("display", "block");
             },
@@ -65,7 +66,7 @@ $(function () {
 
     function login(name){
         $.ajax({
-            url: 'http://localhost:4860/login-client',
+            url: '/login-user',
             type: 'POST',
             contentType : 'application/json; charset=utf-8',
             dataType: 'json',
@@ -75,9 +76,10 @@ $(function () {
             success: function(response){
                 console.log(response);
                 localStorage.setItem("name", name);
+                $("#user-name").text(response.user.name);
                 $("#registration-block").css("display", "none");
                 $("#transaction-block").css("display", "block");
-                updateView(response.client);
+                updateView(response.user);
             },
             error: function(response){
                 console.log(response);
@@ -88,17 +90,17 @@ $(function () {
 
     function registerIncome(name, amount){
         $.ajax({
-            url: 'http://localhost:4860/register-income',
+            url: '/register-income',
             type: 'POST',
             contentType : 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify({
-                clientName: name,
+                userName: name,
                 transactionAmount: amount
             }),
             success: function(response){
                 console.log(response);
-                updateView(response.client);
+                updateView(response.user);
             },
             error: function(response){
                 console.log(response);
@@ -109,17 +111,17 @@ $(function () {
 
     function registerWithdrawal(name, amount){
         $.ajax({
-            url: 'http://localhost:4860/register-withdrawal',
+            url: '/register-withdrawal',
             type: 'POST',
             contentType : 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify({
-                clientName: name,
+                userName: name,
                 transactionAmount: amount
             }),
             success: function(response){
                 console.log(response);
-                updateView(response.client);
+                updateView(response.user);
             },
             error: function(response){
                 console.log(response);
@@ -128,15 +130,15 @@ $(function () {
         });
     }
 
-    function updateView(client){
-        if(client.balance === 0){
+    function updateView(user){
+        if(user.balance === 0 && user.balanceDetail.length === 0){
             return;
         }
 
         $("#balance-detail").css("display", "block");
-        $("#balance-amount").text(client.balance);
+        $("#balance-amount").text(user.balance);
         $(".item").remove();
-        client.balanceDetail.forEach(showTransaction);
+        user.balanceDetail.forEach(showTransaction);
     }
 
     function showTransaction(item, index){

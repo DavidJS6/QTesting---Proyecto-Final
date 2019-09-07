@@ -2,15 +2,15 @@ package com.example.qtestingserver.dto.requests;
 
 public class TransactionRequest {
 
-    private String clientName;
+    private String userName;
     private Double transactionAmount;
 
-    public String getClientName() {
-        return clientName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Double getTransactionAmount() {

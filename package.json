@@ -1,12 +1,12 @@
 {
-  "name": "bdd-soe",
+  "name": "qtesting-proyecto-final",
   "version": "1.0.0",
-  "description": "Prueba de BDD",
+  "description": "Proyecto final del Modulo 3 - SOE",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "soe",
+  "author": "David Sandoval",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",

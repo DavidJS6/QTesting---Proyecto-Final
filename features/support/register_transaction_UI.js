@@ -2,23 +2,18 @@ const { Given, When, Then } = require('cucumber')
 const { expect } = require('chai')
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
-let clientName;
-let transactionAmount;
-let registerResponse = undefined;
-let transactionResponse = undefined;
-
-Given('Los siguientes datos de cliente NOMBRE {string} y MONTO {int}', function (name, amount) {
-    clientName = name;
-    transactionAmount = amount;
+Given('Los siguientes datos de usuario NOMBRE {string} y MONTO {int}', function (name, amount) {
+    this.userName = name;
+    this.transactionAmount = amount;
 });
 
 When('Navego a la pagina principal del sistema', { timeout: 10 * 1000 } , async function () {
     chromeDriver = await new Builder().forBrowser('chrome').build();
-    await chromeDriver.get('http://localhost:4860/home');
+    await chromeDriver.get('http://localhost:4868/home');
 });
 
-When('Introduzco el nombre del cliente', async function () {
-    await chromeDriver.findElement(By.id('name-txt')).sendKeys(clientName);
+When('Introduzco el nombre del usuario', async function () {
+    await chromeDriver.findElement(By.id('name-txt')).sendKeys(this.userName);
 });
 
 When('Presiono el boton Registrarse', async function () {
@@ -26,7 +21,7 @@ When('Presiono el boton Registrarse', async function () {
 });
 
 When('Introduzco el monto para la transaccion', async function () {
-    await chromeDriver.findElement(By.id('amount-txt')).sendKeys(transactionAmount);
+    await chromeDriver.findElement(By.id('amount-txt')).sendKeys(this.transactionAmount);
 });
 
 When('Presiono el boton Registrar ingreso', async function () {

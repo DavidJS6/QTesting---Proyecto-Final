@@ -2,34 +2,31 @@ const { Given, When, Then } = require('cucumber')
 const { expect } = require('chai')
 const httpClient = require('request-promise')
 
-let newClient = {};
-let transactionData = {}
-let httpOptions = {};
 let registerResponse = undefined;
 let transactionResponse = undefined;
 
 Given('Los siguientes datos NOMBRE {string} y MONTO {int}', function (name, amount) {
-    newClient = {
+    this.newUser = {
         name: name
     };
-    transactionData = {
-        clientName: name,
+    this.transactionData = {
+        userName: name,
         transactionAmount: amount
     }
 });
 
-When('Preparo el JSON para registrar un nuevo cliente', function () {
-    httpOptions = {
+When('Preparo el JSON para registrar un nuevo usuario', function () {
+    this.httpTransactionOptions = {
         method: 'POST',
-        uri: 'http://localhost:4860/register-client',
+        uri: 'http://localhost:4868/register-user',
         json: true,
-        body: newClient,
+        body: this.newUser,
         resolveWithFullResponse: true
     };
 });
 
-When('Hago una request POST para registrar al cliente', async function () {
-    await httpClient(httpOptions)
+When('Hago una request POST para registrar al usuario', async function () {
+    await httpClient(this.httpTransactionOptions)
     .then(function(response) {
         registerResponse = response;
     })
@@ -39,17 +36,17 @@ When('Hago una request POST para registrar al cliente', async function () {
 });
 
 When('Preparo el JSON para registrar la transaccion', function () {
-    httpOptions = {
+    this.httpTransactionOptions = {
         method: 'POST',
-        uri: 'http://localhost:4860/register-income',
+        uri: 'http://localhost:4868/register-income',
         json: true,
-        body: transactionData,
+        body: this.transactionData,
         resolveWithFullResponse: true
     };
 });
 
 When('Hago una request POST para registrar la transaccion', async function () {
-    await httpClient(httpOptions)
+    await httpClient(this.httpTransactionOptions)
     .then(function(response) {
         transactionResponse = response;
     })
