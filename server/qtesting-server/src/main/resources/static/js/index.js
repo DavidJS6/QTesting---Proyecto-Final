@@ -26,7 +26,7 @@ $(function () {
         if(amount !== ""){
             registerIncome(localStorage.getItem("name"), amount);
         }else{
-            toastr.warning("Dege ingresar un monto");
+            toastr.warning("Debe ingresar un monto");
         }
     });
 
@@ -35,7 +35,7 @@ $(function () {
         if(amount !== ""){
             registerWithdrawal(localStorage.getItem("name"), amount);
         }else{
-            toastr.warning("Dege ingresar un monto");
+            toastr.warning("Debe ingresar un monto");
         }
     });
 
